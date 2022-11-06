@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         return mapView
     }()
     
-    lazy var setNewAddressButton: UIButton = setButton(systemName: "plus.square.fill.on.square.fill")
+    lazy var setNewAddressButton: UIButton = setButton(systemName: "plus.square.fill.on.square.fill", isHidden: false)
     
     lazy var buildRouteButton: UIButton = setButton(systemName: "arrowshape.bounce.forward.fill")
     
@@ -30,7 +30,7 @@ class ViewController: UIViewController {
         setConstraints()
     }
 
-    func setButton(systemName: String) -> UIButton {
+    func setButton(systemName: String, isHidden: Bool = true) -> UIButton {
         let button = UIButton()
         button.backgroundColor = .white
         button.layer.cornerRadius = 8
@@ -39,6 +39,7 @@ class ViewController: UIViewController {
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 35)
         button.tintColor = UIColor(named: "darkRed")
         button.setImage(UIImage(systemName: systemName, withConfiguration: imageConfig ), for: .normal)
+        button.isHidden = isHidden
         return button
     }
     
@@ -56,7 +57,9 @@ class ViewController: UIViewController {
     }
     
     @objc func setNewAddressButtonTapped(){
-        
+        addAddressAlert(title: "Новый адрес", placeholder: "Введите адрес") { address in
+            print(address)
+        }
     }
     
     @objc func buildRouteButtonTapped(){

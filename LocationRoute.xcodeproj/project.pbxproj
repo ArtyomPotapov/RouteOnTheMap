@@ -11,6 +11,7 @@
 		5029F3F82917111400CD17ED /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029F3F72917111400CD17ED /* SceneDelegate.swift */; };
 		5029F3FA2917111400CD17ED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029F3F92917111400CD17ED /* ViewController.swift */; };
 		5029F3FF2917111A00CD17ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5029F3FE2917111A00CD17ED /* Assets.xcassets */; };
+		5029F40A291847C100CD17ED /* AddAddressAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029F409291847C100CD17ED /* AddAddressAlert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		5029F3F92917111400CD17ED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5029F3FE2917111A00CD17ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5029F4032917111A00CD17ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5029F409291847C100CD17ED /* AddAddressAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAddressAlert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 				5029F3F52917111400CD17ED /* AppDelegate.swift */,
 				5029F3F72917111400CD17ED /* SceneDelegate.swift */,
 				5029F3F92917111400CD17ED /* ViewController.swift */,
+				5029F409291847C100CD17ED /* AddAddressAlert.swift */,
 				5029F3FE2917111A00CD17ED /* Assets.xcassets */,
 				5029F4032917111A00CD17ED /* Info.plist */,
 			);
@@ -133,6 +136,7 @@
 				5029F3FA2917111400CD17ED /* ViewController.swift in Sources */,
 				5029F3F62917111400CD17ED /* AppDelegate.swift in Sources */,
 				5029F3F82917111400CD17ED /* SceneDelegate.swift in Sources */,
+				5029F40A291847C100CD17ED /* AddAddressAlert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
