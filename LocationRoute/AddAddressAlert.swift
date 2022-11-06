@@ -25,4 +25,12 @@ extension ViewController {
         alertController.addAction(cancelButton)
         present(alertController, animated: false)
     }
+    
+    func showErrorAlert(title: String, message: String){
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel)
+        alertController.addAction(cancelButton)
+        present(alertController, animated: false)
+    }
 }

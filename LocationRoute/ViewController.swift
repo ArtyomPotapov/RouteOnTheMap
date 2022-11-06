@@ -11,7 +11,7 @@ import CoreLocation
 
 class ViewController: UIViewController {
     
-    let mapView: MKMapView = {
+    lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.translatesAutoresizingMaskIntoConstraints = false
         return mapView
@@ -22,12 +22,14 @@ class ViewController: UIViewController {
     lazy var buildRouteButton: UIButton = setButton(systemName: "arrowshape.bounce.forward.fill")
     
     lazy var deleteAllAddressesButton: UIButton = setButton(systemName: "multiply.square.fill")
+    
+    var annotationArray = [MKPointAnnotation]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setViews()
-        addTargetsToButtons()
         setConstraints()
+        addTargetsToButtons()
     }
 
     func setButton(systemName: String, isHidden: Bool = true) -> UIButton {
@@ -58,7 +60,7 @@ class ViewController: UIViewController {
     
     @objc func setNewAddressButtonTapped(){
         addAddressAlert(title: "Новый адрес", placeholder: "Введите адрес") { address in
-            print(address)
+            self.setPlacemark(address: address)
         }
     }
     
@@ -69,7 +71,6 @@ class ViewController: UIViewController {
     @objc func deleteAllAddressButtonTapped(){
         
     }
-    
     
     func setConstraints(){
         
@@ -97,5 +98,32 @@ class ViewController: UIViewController {
         ])
     }
 
+    private func setPlacemark(address: String = "Москва, Кутузовский проспект 2"){
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(address) { [self] placemarks, error in
+            if let error = error {
+                print(error)
+                showErrorAlert(title: "Ошибка", message: "Сервер недоступен")
+                return
+            }
+            
+            guard let placemark = placemarks?.first else { return }
+            
+            let  annotation = MKPointAnnotation()
+            annotation.title = "\(address)"
+            guard let placemarkLocation = placemark.location else { return }
+            annotation.coordinate = placemarkLocation.coordinate
+            annotationArray.append(annotation)
+            
+            if annotationArray.count > 2 {
+                buildRouteButton.isHidden = false
+                deleteAllAddressesButton.isHidden = false
+            }
+            
+            mapView.showAnnotations(annotationArray, animated: false)
+            
+        }
+    }
+    
 }
 
