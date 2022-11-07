@@ -11,6 +11,7 @@ import CoreLocation
 
 class ViewController: UIViewController {
     
+    
     lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.translatesAutoresizingMaskIntoConstraints = false
@@ -28,6 +29,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setViews()
+        mapView.delegate = self
         setConstraints()
         addTargetsToButtons()
     }
@@ -65,11 +67,17 @@ class ViewController: UIViewController {
     }
     
     @objc func buildRouteButtonTapped(){
-        
+        for i in 0...annotationArray.count-2 {
+            createDirectionRequest(firstCoordinate: annotationArray[i].coordinate, secondCoordinate: annotationArray[i+1].coordinate)
+        }
     }
     
     @objc func deleteAllAddressButtonTapped(){
-        
+        mapView.removeOverlays(mapView.overlays)
+        mapView.removeAnnotations(mapView.annotations)
+        annotationArray = []
+        buildRouteButton.isHidden = true
+        deleteAllAddressesButton.isHidden = true
     }
     
     func setConstraints(){
@@ -98,7 +106,7 @@ class ViewController: UIViewController {
         ])
     }
 
-    private func setPlacemark(address: String = "Москва, Кутузовский проспект 2"){
+    private func setPlacemark(address: String){
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(address) { [self] placemarks, error in
             if let error = error {
@@ -124,6 +132,43 @@ class ViewController: UIViewController {
             
         }
     }
-    
+    func createDirectionRequest(firstCoordinate: CLLocationCoordinate2D,
+                                secondCoordinate: CLLocationCoordinate2D){
+        
+        let firstCoordinate = MKPlacemark(coordinate: firstCoordinate)
+        let secondCoordinate = MKPlacemark(coordinate: secondCoordinate)
+        
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark: firstCoordinate)
+        request.destination = MKMapItem(placemark: secondCoordinate)
+        request.transportType = .walking
+        request.requestsAlternateRoutes = true
+
+        let direction = MKDirections(request: request)
+        direction.calculate { (response, error) in
+            if let error = error {
+                print(error)
+                return
+            }
+            guard let response = response else {
+                self.showErrorAlert(title: "Ошибка маршрута", message: "Введите другие адреса")
+                return
+            }
+            var minRoute = response.routes[0]
+            for route in response.routes {
+                minRoute = (route.distance < minRoute.distance) ? route : minRoute
+            }
+            
+            self.mapView.addOverlay(minRoute.polyline)
+        }
+        
+    }
 }
 
+extension ViewController: MKMapViewDelegate{
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay as! MKPolyline)
+        renderer.strokeColor = .systemRed
+        return renderer
+    }
+}

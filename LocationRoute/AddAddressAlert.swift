@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 extension ViewController {
     
@@ -33,4 +34,5 @@ extension ViewController {
         alertController.addAction(cancelButton)
         present(alertController, animated: false)
     }
+    
 }
