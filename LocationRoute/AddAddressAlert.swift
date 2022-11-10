@@ -8,7 +8,7 @@
 import UIKit
 import CoreLocation
 
-extension ViewController {
+extension ListTableViewController {
     
     func addAddressAlert(title: String, placeholder: String, completionHandler: @escaping (String)->()){
         
